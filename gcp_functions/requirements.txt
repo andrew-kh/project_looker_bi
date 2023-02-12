@@ -1,5 +1,2 @@
-# Function dependencies, for example:
-# package>=version
 pandas
 google-cloud-bigquery
-pandas-gbq
