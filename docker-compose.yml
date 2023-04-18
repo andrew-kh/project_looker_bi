@@ -8,7 +8,8 @@ services:
       POSTGRES_PASSWORD: ${PG_PWD}
       POSTGRES_DB: hh_data
     ports:
-      - '5432:5432'
+      - 5432:5432
+    command: postgres -c listen_addresses='*'
     volumes:
       - ./data:/var/lib/postgresql/data
   pgadmin:
@@ -31,6 +32,6 @@ services:
     volumes:
       - ./metabase:/metabase-data
     ports:
-      - '3000:3000'
+      - 3000:3000
     depends_on:
       - db
