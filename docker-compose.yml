@@ -4,8 +4,8 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_USER: x
-      POSTGRES_PASSWORD: x
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PWD}
       POSTGRES_DB: hh_data
     ports:
       - '5432:5432'
@@ -16,7 +16,7 @@ services:
     restart: always
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
-      - PGADMIN_DEFAULT_PASSWORD=x
+      - PGADMIN_DEFAULT_PASSWORD=${PG_ADMIN_PWD}
     ports:
       - 8080:80
   metabase:
@@ -25,8 +25,8 @@ services:
       - MB_DB_TYPE=postgres
       - MB_DB_DBNAME=hh_data
       - MB_DB_PORT=5432
-      - MB_DB_USER=x
-      - MB_DB_PASS=x
+      - MB_DB_USER=${MB_PWD}
+      - MB_DB_PASS=${MB_DB_PASS}
       - MB_DB_HOST=db
     volumes:
       - ./metabase:/metabase-data
