@@ -2,14 +2,25 @@ import os
 import re
 import pandas as pd
 
-folder_path = '/mnt/c/Users/koval/vs-projects/hh_data/new_csvs'
+folder_path = '' # folder with csvs file
 
-file = 'df_cluster_experiences_1681710832.txt'
+df_base = pd.DataFrame()
 
-df = pd.read_csv(folder_path + '/' + file, sep = '\t')
+for file in os.listdir(folder_path):
 
-pattern = r"df_cluster_(.*?)_(?=\d)"
-result = re.search(pattern, file)
-attribute = result.group(1)
-df['attribute'] = attribute
-print(df.head(3))
+    df = pd.read_csv(folder_path + '/' + file, sep = '\t')
+
+    pattern = r"df_cluster_(.*?)_(?=\d)"
+
+    result = re.search(pattern, file)
+
+    attribute = result.group(1)
+
+    df['attribute'] = attribute
+
+    df_base = pd.concat([df_base, df], ignore_index=True)
+
+df_base.to_csv('',                  # path for new file
+               sep = '\t',
+               index=False,
+               index_label=False)
