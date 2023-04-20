@@ -1,3 +1,4 @@
+#! /usr/bin python3
 import requests
 import pandas as pd
 from sqlalchemy import create_engine
