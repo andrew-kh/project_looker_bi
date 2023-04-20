@@ -26,7 +26,7 @@ services:
       - MB_DB_TYPE=postgres
       - MB_DB_DBNAME=hh_data
       - MB_DB_PORT=5432
-      - MB_DB_USER=${MB_PWD}
+      - MB_DB_USER=${MB_USR}
       - MB_DB_PASS=${MB_DB_PASS}
       - MB_DB_HOST=db
     volumes:
