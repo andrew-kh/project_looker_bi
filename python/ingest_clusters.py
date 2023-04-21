@@ -1,5 +1,6 @@
 #! /usr/bin python3
 import requests
+import time
 import pandas as pd
 from sqlalchemy import create_engine
 from get_env import get_env_data_as_dict
@@ -14,6 +15,7 @@ VACANCIES_PARAMS = {
     'clusters': 'true',
     'locale': 'EN'
 }
+request_dt = int(time.time())
 employer_vacancies_r = requests.get(VACANCIES_LINK, VACANCIES_PARAMS)
 employer_vacancies = employer_vacancies_r.json()
 clusters = employer_vacancies['clusters']
@@ -32,6 +34,7 @@ for cluster_key in clusters_map.keys():
     cluster_items = clusters[clusters_map[cluster_key]]['items']
     df = pd.DataFrame(cluster_items)
     df['attribute'] = cluster_key
+    df['request_dt'] = request_dt
     df_base = pd.concat([df_base, df], ignore_index=True)
 
 df = df.rename(columns={
