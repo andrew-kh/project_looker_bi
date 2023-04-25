@@ -15,27 +15,22 @@ VACANCIES_PARAMS = {
     'clusters': 'true',
     'locale': 'EN'
 }
+
 request_dt = int(time.time())
 employer_vacancies_r = requests.get(VACANCIES_LINK, VACANCIES_PARAMS)
 employer_vacancies = employer_vacancies_r.json()
 clusters = employer_vacancies['clusters']
-clusters_map = {
-    'item': 0,
-    'specialization': 2,
-    'industry': 3,
-    'experience': 4,
-    'employment': 5,
-    'schedule': 6,
-    'label': 7,
-    'professional_role': 8
-}
-df_base = pd.DataFrame()
-for cluster_key in clusters_map.keys():
-    cluster_items = clusters[clusters_map[cluster_key]]['items']
-    df = pd.DataFrame(cluster_items)
-    df['attribute'] = cluster_key
-    df['request_dt'] = request_dt
-    df_base = pd.concat([df_base, df], ignore_index=True)
+
+list_dfs = []
+
+for i in clusters:
+    cluster_items = i['items']
+    df_cluster = pd.DataFrame(cluster_items)
+    df_cluster['attribute'] = i['id']
+    df_cluster['request_dt'] = request_dt
+    list_dfs.append(df_cluster)
+
+df = pd.concat(list_dfs)
 
 df = df.rename(columns={
     'name':'cluster_name',
