@@ -41,3 +41,6 @@ df = df.rename(columns={
     })
 
 df.to_sql('clusters', con=engine, if_exists='append', schema='dev', index=False)
+
+with engine.connect() as con:
+    con.execute("update dev.clusters set request_timestamp = to_timestamp(request_time) at time zone 'msk' where request_timestamp is null")
